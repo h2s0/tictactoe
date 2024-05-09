@@ -12,6 +12,7 @@ function Board() {
   const [winner, setWinner] = useState('');
   // 점수 상태 관리
   const [score, setScore] = useState(0);
+  const [textColor, setTextColor] = useState('text-gray-300');
 
 
   // square 클릭함수, 승패구별함수, 게임리셋함수, score 업데이트
@@ -67,12 +68,14 @@ function Board() {
           && squares[a] === squares[b] && squares[a] === squares[c]
       ) {
         setWinner(squares[a]);
+        setTextColor('text-black');
         return squares[a];
       }
     }
     const isFull = squares.every(square => square !== null);
     if (isFull ) {
       setWinner('Draw');
+      setTextColor('text-black');
     }
     return null;
   }
@@ -96,9 +99,8 @@ function Board() {
     setWinner('');
     setSquares(Array(9).fill(null));
     setCurrentPlayer('X');
+    setTextColor('text-gray-300');
   };
-
-  // 게임이 끝나면 play again 버튼 글자 색깔이 회색 -> 검정색으로 바뀌도록 설정
 
   return(
     <div className='flex flex-col gap-2 items-center w-72 bg-orange-200 rounded-3xl p-5'>
@@ -111,7 +113,7 @@ function Board() {
         <div className='board-row'> {[6,7,8].map( i => <Square key={i} value={squares[i]} onClick={() => handleClick(i)} />)} </div>
       </div>
       <h5>winner : {winner}</h5>
-      <button className='bg-white p-2 rounded-lg' onClick={nextGameClick}>Play Again</button>
+      <button className={`bg-white px-4 py-2 rounded-lg ${textColor}`} onClick={nextGameClick}>Play Again</button>
     </div>
   )
 }
