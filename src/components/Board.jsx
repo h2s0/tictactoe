@@ -18,6 +18,9 @@ function Board() {
 
   // 컴퓨터가 맨 처음 수를 놓게 함
   useEffect(() => {
+    if (referee(squares)) {
+      setWinner(referee(squares));
+    }
     if (currentPlayer === 'X') {
       const timer = setTimeout(computerMove, 1000);
       return () => clearTimeout(timer);
@@ -67,33 +70,49 @@ function Board() {
         return squares[a];
       }
     }
+    const isFull = squares.every(square => square !== null);
+    if (isFull ) {
+      setWinner('Draw');
+    }
     return null;
   }
 
+  // 게임 종료 후 점수 올리고 내리기
   useEffect(() => {
     if (winner === 'O') {
-      setScore(+1);
+      setScore(prevScore => prevScore + 1);
     } else if (winner === 'X') {
-      setScore(-1);
-    } else {
-      setScore(score)
+      setScore(prevScore => prevScore - 1);
+    } else if (winner === 'Draw') {
+      setScore(prevScore => prevScore)
     }
   }, [winner])
 
+  // 다음 게임 버튼
+  const nextGameClick = () => {
+    if (!winner) {
+      return;
+    }
+    setWinner('');
+    setSquares(Array(9).fill(null));
+    setCurrentPlayer('X');
+  };
+
+  // 게임이 끝나면 play again 버튼 글자 색깔이 회색 -> 검정색으로 바뀌도록 설정
+
   return(
-    <>
-      <div className='text-center'>
-        <h3>Score : {score}</h3>
-        {score === 9999 && <h2>Congratulations!</h2>}
-        <h2>current player : {currentPlayer}</h2>
-        <h2>winner : {winner}</h2>
-      </div>
-      <section>
+    <div className='flex flex-col gap-2 items-center w-72 bg-orange-200 rounded-3xl p-5'>
+      <h5>Score : {score}</h5>
+      {score === 9999 && <h2>Congratulations!</h2>}
+      <h5>current player : {currentPlayer}</h5>
+      <div>
         <div className='board-row'> {[0,1,2].map( i => <Square key={i} value={squares[i]} onClick={() => handleClick(i)} />)} </div>
         <div className='board-row'> {[3,4,5].map( i => <Square key={i} value={squares[i]} onClick={() => handleClick(i)} />)} </div>
         <div className='board-row'> {[6,7,8].map( i => <Square key={i} value={squares[i]} onClick={() => handleClick(i)} />)} </div>
-      </section>
-    </>
+      </div>
+      <h5>winner : {winner}</h5>
+      <button className='bg-white p-2 rounded-lg' onClick={nextGameClick}>Play Again</button>
+    </div>
   )
 }
 
