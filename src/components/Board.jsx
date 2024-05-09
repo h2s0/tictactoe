@@ -8,6 +8,8 @@ function Board() {
   const [squares, setSquares] = useState(Array(9).fill(null));
   // 현재 차례 상태 관리
   const [currentPlayer, setCurrentPlayer] = useState('X');
+  // 승리자 관리
+  const [winner, setWinner] = useState('');
   // 점수 상태 관리
   const [score, setScore] = useState(0);
 
@@ -61,11 +63,22 @@ function Board() {
       if ( squares[a]
           && squares[a] === squares[b] && squares[a] === squares[c]
       ) {
+        setWinner(squares[a]);
         return squares[a];
       }
     }
     return null;
   }
+
+  useEffect(() => {
+    if (winner === 'O') {
+      setScore(+1);
+    } else if (winner === 'X') {
+      setScore(-1);
+    } else {
+      setScore(score)
+    }
+  }, [winner])
 
   return(
     <>
@@ -73,6 +86,7 @@ function Board() {
         <h3>Score : {score}</h3>
         {score === 9999 && <h2>Congratulations!</h2>}
         <h2>current player : {currentPlayer}</h2>
+        <h2>winner : {winner}</h2>
       </div>
       <section>
         <div className='board-row'> {[0,1,2].map( i => <Square key={i} value={squares[i]} onClick={() => handleClick(i)} />)} </div>
