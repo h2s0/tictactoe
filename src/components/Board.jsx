@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Square from './Square';
-import { useEffect } from 'react';
 
 function Board() {
 
@@ -8,10 +7,12 @@ function Board() {
   const [squares, setSquares] = useState(Array(9).fill(null));
   // 현재 차례 상태 관리
   const [currentPlayer, setCurrentPlayer] = useState('X');
-  // 승리자 관리
+  // 승리자 상태 관리
   const [winner, setWinner] = useState('');
   // 점수 상태 관리
-  const [score, setScore] = useState(0);
+  const [computerScore, setComputerScore] = useState(0);
+  const [playerScore, setPlayerScore] = useState(0);
+  // 버튼 글자 색깔 상태 관리
   const [textColor, setTextColor] = useState('text-gray-300');
 
 
@@ -83,11 +84,12 @@ function Board() {
   // 게임 종료 후 점수 올리고 내리기
   useEffect(() => {
     if (winner === 'O') {
-      setScore(prevScore => prevScore + 1);
+      setPlayerScore(prevScore => prevScore + 1);
     } else if (winner === 'X') {
-      setScore(prevScore => prevScore - 1);
+      setComputerScore(prevScore => prevScore + 1);
     } else if (winner === 'Draw') {
-      setScore(prevScore => prevScore)
+      setPlayerScore(prevScore => prevScore);
+      setComputerScore(prevScore => prevScore);
     }
   }, [winner])
 
@@ -104,8 +106,8 @@ function Board() {
 
   return(
     <div className='flex flex-col gap-2 items-center w-72 bg-orange-200 rounded-3xl p-5'>
-      <h5>Score : {score}</h5>
-      {score === 9999 && <h2>Congratulations!</h2>}
+      <h5>{playerScore} : {computerScore}</h5>
+      {playerScore === 9999 && <h2>Congratulations!</h2>}
       <h5>current player : {currentPlayer}</h5>
       <div>
         <div className='board-row'> {[0,1,2].map( i => <Square key={i} value={squares[i]} onClick={() => handleClick(i)} />)} </div>
