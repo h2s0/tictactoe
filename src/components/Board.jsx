@@ -15,9 +15,6 @@ function Board() {
   // 버튼 글자 색깔 상태 관리
   const [textColor, setTextColor] = useState('text-gray-300');
 
-
-  // square 클릭함수, 승패구별함수, 게임리셋함수, score 업데이트
-
   // 컴퓨터가 맨 처음 수를 놓게 함
   useEffect(() => {
     if (referee(squares)) {
@@ -29,7 +26,7 @@ function Board() {
     }
   }, [currentPlayer, squares]);
 
-  // square 클릭 함수
+  // 사용자 차례
   const handleClick = (i) => {
     if (squares[i] || referee(squares) || currentPlayer !== 'O') {
       return;
@@ -62,9 +59,7 @@ function Board() {
       [0, 4, 8], [2, 4, 6]
     ];
     for ( let line of lines ) {
-      // 배열 구조분해
       const [a,b,c] = line;
-      // 값이 있는지, 세 칸이 모두 같은 값을 가지고 있는지 확인
       if ( squares[a]
           && squares[a] === squares[b] && squares[a] === squares[c]
       ) {
