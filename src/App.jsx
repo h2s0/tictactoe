@@ -2,7 +2,7 @@ import Board from './components/Board';
 
 function App() {
   return (
-    <div className='font-GMarket'>
+    <div className='font-GMarket flex justify-center'>
       <Board />
     </div>
   );
