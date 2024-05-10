@@ -8,5 +8,7 @@ pnpm dev
 구현 과정 2탄 : https://h2s0.tistory.com/98 <br/>
 구현 과정 3탄 : https://h2s0.tistory.com/99 <br/>
 
-구현 화면
-![image](https://github.com/h2s0/tictactoe/assets/134567479/978b0597-234a-4a78-b84d-086480a07405)
+
+결과물
+
+![vs완성](https://github.com/h2s0/tictactoe/assets/134567479/5a4ec8f4-8137-4438-b8a9-c7df4f94396d)
