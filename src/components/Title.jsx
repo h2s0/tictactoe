@@ -1,8 +1,8 @@
-function Title ({ playerScore, computerScore }) {
+function Title ({ p, c }) {
   return(
     <>
-      {playerScore === 9999 && <h5>w1nner w1nner ch1cken dinner</h5>}
-      {computerScore === 9999 && <h5>loser loser drunken b00zer</h5>}
+      {p === 9999 && <h5>w1nner w1nner ch1cken dinner</h5>}
+      {c === 9999 && <h5>loser loser drunken b00zer</h5>}
     </>
   )
 }

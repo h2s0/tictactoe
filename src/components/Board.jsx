@@ -6,8 +6,8 @@ function Board() {
   const [squares, setSquares] = useState(Array(9).fill(null));
   const [currentPlayer, setCurrentPlayer] = useState('X');
   const [winner, setWinner] = useState('');
-  const [computerScore, setComputerScore] = useState(0);
-  const [playerScore, setPlayerScore] = useState(0);
+  const [c, setComputerScore] = useState(0);
+  const [p, setPlayerScore] = useState(0);
   const [textColor, setTextColor] = useState('text-gray-300');
 
   useEffect(() => {
@@ -90,9 +90,9 @@ function Board() {
 
   return(
     <div className='flex flex-col gap-2 items-center w-72 bg-orange-200 rounded-3xl p-5'>
-      <h5>{playerScore} : {computerScore}</h5>
+      <h5>{p} : {c}</h5>
       <h5>current player : {currentPlayer}</h5>
-      <Title playerScore={playerScore} computerScore={computerScore} />
+      <Title p={p} c={c} />
       <div>
         <div className='board-row'> {[0,1,2].map( i => <Square key={i} value={squares[i]} onClick={() => handleClick(i)} />)} </div>
         <div className='board-row'> {[3,4,5].map( i => <Square key={i} value={squares[i]} onClick={() => handleClick(i)} />)} </div>
