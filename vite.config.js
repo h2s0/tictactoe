@@ -4,31 +4,38 @@ import { defineConfig } from "vite";
 import { env } from "node:process";
 import obfuscator from 'rollup-plugin-obfuscator';
 
-const idDev = env.NODE_ENV === "development";
+const isDev = env.NODE_ENV === "development";
 
 // https://vitejs.dev/config/
 export default defineConfig({
- plugins: [
-  react(),
-  obfuscator({
-    controlFlowFlattening: true,
-    rotateStringArray: true,
-    deadCodeInjection: true,
-    disableConsoleOutput: true,
-    stringArray: true,
-  })
-],
- css: {
-   devSourcemap: true,
-   modules: {
-     generateScopedName: idDev
-       ? "[name]_[local]__[hash:base64:5]"
-       : "[hash:base64:4]",
-   },
- },
- resolve: {
-   alias: {
-     "@": resolve(__dirname, "./src"),
-   },
- },
+  plugins: [
+    react(),
+    !isDev && obfuscator({
+      controlFlowFlattening: true,
+      controlFlowFlatteningThreshold: 0.75,
+      deadCodeInjection: true,
+      deadCodeInjectionThreshold: 0.4,
+      disableConsoleOutput: true,
+      stringArray: true,
+      rotateStringArray: true,
+      rotateStringArrayEnabled: true,
+      stringArrayThreshold: 0.75,
+      transformObjectKeys: true,
+      splitStrings: true,
+      splitStringsChunkLength: 10
+    })
+  ].filter(Boolean),
+  css: {
+    devSourcemap: true,
+    modules: {
+      generateScopedName: isDev
+        ? "[name]_[local]__[hash:base64:5]"
+        : "[hash:base64:4]",
+    },
+  },
+  resolve: {
+    alias: {
+      "@": resolve(__dirname, "./src"),
+    },
+  },
 });
