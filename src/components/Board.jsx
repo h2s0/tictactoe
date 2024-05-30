@@ -91,7 +91,6 @@ function Board() {
   return(
     <div className='flex flex-col gap-2 items-center w-72 bg-orange-200 rounded-3xl p-5'>
       <h5>{p} : {c}</h5>
-      <h5>current player : {currentPlayer}</h5>
       <Title p={p} c={c} />
       <div>
         <div className='board-row'> {[0,1,2].map( i => <Square key={i} value={squares[i]} onClick={() => handleClick(i)} />)} </div>
